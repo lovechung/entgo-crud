@@ -26,8 +26,10 @@ func (User) Fields() []ent.Field {
 	return []ent.Field{
 		field.Int64("id"),
 		field.String("username").
+			Optional().
 			MaxLen(20),
-		field.String("password"),
+		field.String("password").
+			Optional(),
 		field.Time("created_at").
 			Default(time.Now).
 			SchemaType(map[string]string{dialect.MySQL: "datetime"}),

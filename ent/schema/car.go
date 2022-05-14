@@ -27,7 +27,8 @@ func (Car) Fields() []ent.Field {
 		field.Int64("id"),
 		field.Int64("user_id").
 			Optional(),
-		field.String("model"),
+		field.String("model").
+			Optional(),
 		field.Time("registered_at").
 			Default(time.Now).
 			SchemaType(map[string]string{dialect.MySQL: "datetime"}),

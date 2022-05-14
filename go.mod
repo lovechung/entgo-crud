@@ -1,4 +1,4 @@
-module github.com/lovechung/ent-test
+module github.com/lovechung/ent-crud
 
 go 1.18
 

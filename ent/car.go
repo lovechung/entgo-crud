@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"entgo.io/ent/dialect/sql"
-	"github.com/lovechung/ent-test/ent/car"
-	"github.com/lovechung/ent-test/ent/user"
+	"github.com/lovechung/ent-crud/ent/car"
+	"github.com/lovechung/ent-crud/ent/user"
 )
 
 // Car is the model entity for the Car schema.

@@ -10,8 +10,8 @@ import (
 
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/lovechung/ent-test/ent/car"
-	"github.com/lovechung/ent-test/ent/user"
+	"github.com/lovechung/ent-crud/ent/car"
+	"github.com/lovechung/ent-crud/ent/user"
 )
 
 // CarCreate is the builder for creating a Car entity.
@@ -38,6 +38,14 @@ func (cc *CarCreate) SetNillableUserID(i *int64) *CarCreate {
 // SetModel sets the "model" field.
 func (cc *CarCreate) SetModel(s string) *CarCreate {
 	cc.mutation.SetModel(s)
+	return cc
+}
+
+// SetNillableModel sets the "model" field if the given value is not nil.
+func (cc *CarCreate) SetNillableModel(s *string) *CarCreate {
+	if s != nil {
+		cc.SetModel(*s)
+	}
 	return cc
 }
 
@@ -165,9 +173,6 @@ func (cc *CarCreate) defaults() {
 
 // check runs all checks and user-defined validators on the builder.
 func (cc *CarCreate) check() error {
-	if _, ok := cc.mutation.Model(); !ok {
-		return &ValidationError{Name: "model", err: errors.New(`ent: missing required field "Car.model"`)}
-	}
 	if _, ok := cc.mutation.RegisteredAt(); !ok {
 		return &ValidationError{Name: "registered_at", err: errors.New(`ent: missing required field "Car.registered_at"`)}
 	}

@@ -5,10 +5,9 @@ package ent
 import (
 	"time"
 
-	"github.com/lovechung/ent-test/ent/car"
-	"github.com/lovechung/ent-test/ent/group"
-	"github.com/lovechung/ent-test/ent/schema"
-	"github.com/lovechung/ent-test/ent/user"
+	"github.com/lovechung/ent-crud/ent/car"
+	"github.com/lovechung/ent-crud/ent/schema"
+	"github.com/lovechung/ent-crud/ent/user"
 )
 
 // The init function reads all schema descriptors with runtime code
@@ -21,12 +20,6 @@ func init() {
 	carDescRegisteredAt := carFields[3].Descriptor()
 	// car.DefaultRegisteredAt holds the default value on creation for the registered_at field.
 	car.DefaultRegisteredAt = carDescRegisteredAt.Default.(func() time.Time)
-	groupFields := schema.Group{}.Fields()
-	_ = groupFields
-	// groupDescName is the schema descriptor for name field.
-	groupDescName := groupFields[0].Descriptor()
-	// group.NameValidator is a validator for the "name" field. It is called by the builders before save.
-	group.NameValidator = groupDescName.Validators[0].(func(string) error)
 	userFields := schema.User{}.Fields()
 	_ = userFields
 	// userDescUsername is the schema descriptor for username field.

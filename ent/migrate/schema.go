@@ -12,7 +12,7 @@ var (
 	// CarColumns holds the columns for the "car" table.
 	CarColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "model", Type: field.TypeString},
+		{Name: "model", Type: field.TypeString, Nullable: true},
 		{Name: "registered_at", Type: field.TypeTime, SchemaType: map[string]string{"mysql": "datetime"}},
 		{Name: "user_id", Type: field.TypeInt64, Nullable: true},
 	}
@@ -30,22 +30,11 @@ var (
 			},
 		},
 	}
-	// GroupsColumns holds the columns for the "groups" table.
-	GroupsColumns = []*schema.Column{
-		{Name: "id", Type: field.TypeInt, Increment: true},
-		{Name: "name", Type: field.TypeString},
-	}
-	// GroupsTable holds the schema information for the "groups" table.
-	GroupsTable = &schema.Table{
-		Name:       "groups",
-		Columns:    GroupsColumns,
-		PrimaryKey: []*schema.Column{GroupsColumns[0]},
-	}
 	// UserColumns holds the columns for the "user" table.
 	UserColumns = []*schema.Column{
 		{Name: "id", Type: field.TypeInt64, Increment: true},
-		{Name: "username", Type: field.TypeString, Size: 20},
-		{Name: "password", Type: field.TypeString},
+		{Name: "username", Type: field.TypeString, Nullable: true, Size: 20},
+		{Name: "password", Type: field.TypeString, Nullable: true},
 		{Name: "created_at", Type: field.TypeTime, SchemaType: map[string]string{"mysql": "datetime"}},
 		{Name: "updated_at", Type: field.TypeTime, SchemaType: map[string]string{"mysql": "datetime"}},
 	}
@@ -58,7 +47,6 @@ var (
 	// Tables holds all the tables in the schema.
 	Tables = []*schema.Table{
 		CarTable,
-		GroupsTable,
 		UserTable,
 	}
 )

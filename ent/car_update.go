@@ -11,9 +11,9 @@ import (
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
 	"entgo.io/ent/schema/field"
-	"github.com/lovechung/ent-test/ent/car"
-	"github.com/lovechung/ent-test/ent/predicate"
-	"github.com/lovechung/ent-test/ent/user"
+	"github.com/lovechung/ent-crud/ent/car"
+	"github.com/lovechung/ent-crud/ent/predicate"
+	"github.com/lovechung/ent-crud/ent/user"
 )
 
 // CarUpdate is the builder for updating Car entities.
@@ -52,6 +52,20 @@ func (cu *CarUpdate) ClearUserID() *CarUpdate {
 // SetModel sets the "model" field.
 func (cu *CarUpdate) SetModel(s string) *CarUpdate {
 	cu.mutation.SetModel(s)
+	return cu
+}
+
+// SetNillableModel sets the "model" field if the given value is not nil.
+func (cu *CarUpdate) SetNillableModel(s *string) *CarUpdate {
+	if s != nil {
+		cu.SetModel(*s)
+	}
+	return cu
+}
+
+// ClearModel clears the value of the "model" field.
+func (cu *CarUpdate) ClearModel() *CarUpdate {
+	cu.mutation.ClearModel()
 	return cu
 }
 
@@ -178,6 +192,12 @@ func (cu *CarUpdate) sqlSave(ctx context.Context) (n int, err error) {
 			Column: car.FieldModel,
 		})
 	}
+	if cu.mutation.ModelCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
+			Column: car.FieldModel,
+		})
+	}
 	if value, ok := cu.mutation.RegisteredAt(); ok {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeTime,
@@ -262,6 +282,20 @@ func (cuo *CarUpdateOne) ClearUserID() *CarUpdateOne {
 // SetModel sets the "model" field.
 func (cuo *CarUpdateOne) SetModel(s string) *CarUpdateOne {
 	cuo.mutation.SetModel(s)
+	return cuo
+}
+
+// SetNillableModel sets the "model" field if the given value is not nil.
+func (cuo *CarUpdateOne) SetNillableModel(s *string) *CarUpdateOne {
+	if s != nil {
+		cuo.SetModel(*s)
+	}
+	return cuo
+}
+
+// ClearModel clears the value of the "model" field.
+func (cuo *CarUpdateOne) ClearModel() *CarUpdateOne {
+	cuo.mutation.ClearModel()
 	return cuo
 }
 
@@ -415,6 +449,12 @@ func (cuo *CarUpdateOne) sqlSave(ctx context.Context) (_node *Car, err error) {
 		_spec.Fields.Set = append(_spec.Fields.Set, &sqlgraph.FieldSpec{
 			Type:   field.TypeString,
 			Value:  value,
+			Column: car.FieldModel,
+		})
+	}
+	if cuo.mutation.ModelCleared() {
+		_spec.Fields.Clear = append(_spec.Fields.Clear, &sqlgraph.FieldSpec{
+			Type:   field.TypeString,
 			Column: car.FieldModel,
 		})
 	}

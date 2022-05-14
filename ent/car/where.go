@@ -7,7 +7,7 @@ import (
 
 	"entgo.io/ent/dialect/sql"
 	"entgo.io/ent/dialect/sql/sqlgraph"
-	"github.com/lovechung/ent-test/ent/predicate"
+	"github.com/lovechung/ent-crud/ent/predicate"
 )
 
 // ID filters vertices based on their ID field.
@@ -270,6 +270,20 @@ func ModelHasPrefix(v string) predicate.Car {
 func ModelHasSuffix(v string) predicate.Car {
 	return predicate.Car(func(s *sql.Selector) {
 		s.Where(sql.HasSuffix(s.C(FieldModel), v))
+	})
+}
+
+// ModelIsNil applies the IsNil predicate on the "model" field.
+func ModelIsNil() predicate.Car {
+	return predicate.Car(func(s *sql.Selector) {
+		s.Where(sql.IsNull(s.C(FieldModel)))
+	})
+}
+
+// ModelNotNil applies the NotNil predicate on the "model" field.
+func ModelNotNil() predicate.Car {
+	return predicate.Car(func(s *sql.Selector) {
+		s.Where(sql.NotNull(s.C(FieldModel)))
 	})
 }
 
