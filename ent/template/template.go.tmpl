@@ -1,15 +1,15 @@
 {{/* gotype: entgo.io/ent/entc/gen.Graph */}}
 {{ define "template" }}
 
-{{ $pkg := base $.Config.Package }}
-{{ template "header" $ }}
+    {{ $pkg := base $.Config.Package }}
+    {{ template "header" $ }}
 
-{{ range $n := $.Nodes }}
+    {{ range $n := $.Nodes }}
 
-    {{ $updateBuilder := $n.UpdateName }}
-    {{ $updateReceiver := receiver $updateBuilder }}
+        {{ $updateBuilder := $n.UpdateName }}
+        {{ $updateReceiver := receiver $updateBuilder }}
 
-    func ({{ $updateReceiver }} *{{ $updateBuilder }}) Set{{ $n.Name }}(input *biz.{{ $n.Name }}) *{{ $updateBuilder }} {
+        func ({{ $updateReceiver }} *{{ $updateBuilder }}) Set{{ $n.Name }}(input *biz.{{ $n.Name }}) *{{ $updateBuilder }} {
         {{- range $f := $n.Fields }}
             {{ $field := $f.StructField }}
             {{ $set := print "Set" $field }}
@@ -21,24 +21,24 @@
             {{ $updateReceiver }}.{{ $set }}(input.{{ $field }})
         {{- end }}
         return {{ $updateReceiver }}
-    }
+        }
 
-    {{ $createBuilder := $n.CreateName }}
-    {{ $createReceiver := receiver $createBuilder }}
+        {{ $createBuilder := $n.CreateName }}
+        {{ $createReceiver := receiver $createBuilder }}
 
-    func ({{ $createReceiver }} *{{ $createBuilder }}) Set{{ $n.Name }}(input *biz.{{ $n.Name }}) *{{ $createBuilder }} {
-    {{- range $f := $n.Fields }}
-        {{ $field := $f.StructField }}
-        {{ $set := print "Set" $field }}
-        {{ if $f.Optional }}
-            {{ $set = print "SetNillable" $field }}
-        {{ else if $f.Default }}
-            {{ $set = print "SetNillable" $field }}
-        {{ end }}
-        {{ $createReceiver }}.{{ $set }}(input.{{ $field }})
-    {{- end }}
-    return {{ $createReceiver }}
-    }
-{{ end }}
+        func ({{ $createReceiver }} *{{ $createBuilder }}) Set{{ $n.Name }}(input *biz.{{ $n.Name }}) *{{ $createBuilder }} {
+        {{- range $f := $n.Fields }}
+            {{ $field := $f.StructField }}
+            {{ $set := print "Set" $field }}
+            {{ if $f.Optional }}
+                {{ $set = print "SetNillable" $field }}
+            {{ else if $f.Default }}
+                {{ $set = print "SetNillable" $field }}
+            {{ end }}
+            {{ $createReceiver }}.{{ $set }}(input.{{ $field }})
+        {{- end }}
+        return {{ $createReceiver }}
+        }
+    {{ end }}
 
 {{ end }}

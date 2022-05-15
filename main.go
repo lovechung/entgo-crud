@@ -202,8 +202,6 @@ func main() {
 func ListUser(ctx context.Context, client *ent.Client,
 	page, pageSize int, username string, from time.Time, to time.Time) ([]*ent.User, int) {
 
-	q := client.User.Query()
-
 	// 组装查询条件
 	cond := make([]predicate.User, 0)
 	if username != "" {
@@ -215,9 +213,8 @@ func ListUser(ctx context.Context, client *ent.Client,
 	if !to.IsZero() {
 		cond = append(cond, user.CreatedAtLTE(to))
 	}
-	if len(cond) > 0 {
-		q.Where(cond...)
-	}
+
+	q := client.User.Query().Where(cond...)
 
 	// 查询总数
 	total := q.CountX(ctx)
